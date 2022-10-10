@@ -56,7 +56,13 @@ function App() {
             />
             <Route
               path="/main/submitwat/:id/:homework"
-              element={<HomeworkOverview columnName={columnName} />}
+              element={
+                <HomeworkOverview
+                  columnName={columnName}
+                  token={token}
+                  classParam={classParam}
+                />
+              }
             />
           </Route>
         </Routes>
