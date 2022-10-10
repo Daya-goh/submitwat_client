@@ -9,7 +9,6 @@ interface TokenProp {
 const MainPage = ({ token }: TokenProp): JSX.Element => {
   const navigate = useNavigate();
   const handleSubmitwat = () => {
-    console.log("click");
     navigate("/main/submitwat");
   };
 

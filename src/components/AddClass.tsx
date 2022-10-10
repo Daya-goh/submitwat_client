@@ -15,7 +15,7 @@ const AddClass = ({ token }): JSX.Element => {
 
   // open popup form
   const handleAdd = (): void => {
-    console.log("add");
+    // console.log("add");
     setVisible(true);
     setStatusMsg(" ");
   };
@@ -29,7 +29,7 @@ const AddClass = ({ token }): JSX.Element => {
 
   //modifying text file
   const csvFileToArray = (string: string) => {
-    console.log(string);
+    // console.log(string);
     const csvHeader: string[] = string
       .slice(0, string.indexOf("\r"))
       .split(",");
@@ -80,7 +80,7 @@ const AddClass = ({ token }): JSX.Element => {
         }).then((response) =>
           response.json().then((data) => {
             if (data.msg === "error") {
-              console.log("error");
+              // console.log("error");
               setStatusMsg("error: class name exist");
             } else {
               setStatusMsg("success: class added");
@@ -88,7 +88,7 @@ const AddClass = ({ token }): JSX.Element => {
           })
         );
       };
-      console.log(JSON.stringify({ array, newClass }));
+      // console.log(JSON.stringify({ array, newClass }));
       fileReader.readAsText(file);
     }
   };
@@ -96,12 +96,12 @@ const AddClass = ({ token }): JSX.Element => {
   const headerKeys = Object.keys(Object.assign({}, ...array));
 
   const handleClassChange = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setClassname(e.target.value);
   };
 
   const handleClassSubmit = (): void => {
-    console.log(classname);
+    // console.log(classname);
     setVisible(false);
     const newClass = {
       keyword: classname,

@@ -17,7 +17,7 @@ const SubmitwatOverview = ({ token, setClassParam }): JSX.Element => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setClassList(data.rows);
       });
   }, []);

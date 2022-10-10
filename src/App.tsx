@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Layout from "./components/Layout";
+import AddHw from "./pages/AddHw";
 import ClassOverview from "./pages/ClassOverview";
+import HomeworkOverview from "./pages/HomeworkOverview";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import SignUpPage from "./pages/SignUpPage";
@@ -11,6 +13,7 @@ import SubmitwatOverview from "./pages/SubmitWatOverview";
 function App() {
   const [token, setToken] = useState<string>("");
   const [classParam, setClassParam] = useState<string>("");
+  const [columnName, setColumnName] = useState<string>("");
 
   console.log(token);
 
@@ -33,7 +36,27 @@ function App() {
             />
             <Route
               path="/main/submitwat/:id"
-              element={<ClassOverview classParam={classParam} token={token} />}
+              element={
+                <ClassOverview
+                  classParam={classParam}
+                  token={token}
+                  setColumnName={setColumnName}
+                />
+              }
+            />
+            <Route
+              path="/main/submitwat/:id/addhw/:name"
+              element={
+                <AddHw
+                  columnName={columnName}
+                  classParam={classParam}
+                  token={token}
+                />
+              }
+            />
+            <Route
+              path="/main/submitwat/:id/:homework"
+              element={<HomeworkOverview columnName={columnName} />}
             />
           </Route>
         </Routes>

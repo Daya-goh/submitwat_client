@@ -6,8 +6,6 @@ const ClassList = ({ classList, setClassParam }): JSX.Element => {
   const navigate = useNavigate();
 
   const handleClass = (e): void => {
-    console.log("click");
-    console.log(e.target.id);
     setClassParam(e.target.id);
     navigate(`/main/submitwat/${e.target.id}`);
   };
