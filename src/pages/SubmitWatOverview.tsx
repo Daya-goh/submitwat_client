@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListOfClass from "../components/ListOfClass";
+import { ClassInterface } from "../Interface/Interface";
 const SERVER = import.meta.env.VITE_SERVER;
 
-const SubmitwatOverview = ({ token, setClassParam }): JSX.Element => {
+const SubmitwatOverview = ({
+  token,
+  setClassParam,
+}: ClassInterface): JSX.Element => {
   const [classList, setClassList] = useState([]);
   const navigate = useNavigate();
 

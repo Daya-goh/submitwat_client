@@ -1,12 +1,7 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { ClassDetail } from "../pages/ClassHomeworkOverview";
+import { ClassInterface } from "../Interface/Interface";
 // const SERVER = import.meta.env.VITE_SERVER;
-
-interface ClassInterface {
-  classList: ClassDetail[];
-  setClassParam: Dispatch<SetStateAction<string>>;
-}
 
 const ListOfClass = ({
   classList,

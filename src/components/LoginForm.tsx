@@ -2,9 +2,10 @@ import React from "react";
 import { Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate, Link } from "react-router-dom";
+import { CommonInterface } from "../Interface/Interface";
 const SERVER = import.meta.env.VITE_SERVER;
 
-const LoginForm = ({ setToken }): JSX.Element => {
+const LoginForm = ({ setToken }: CommonInterface): JSX.Element => {
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {

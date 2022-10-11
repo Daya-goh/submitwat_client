@@ -1,18 +1,9 @@
 import React, { useState } from "react";
-
 import { useNavigate } from "react-router-dom";
-import { string } from "yup";
+import { CommonInterface, CSVObject } from "../Interface/Interface";
 const SERVER = import.meta.env.VITE_SERVER;
 
-export interface Token {
-  token: string;
-}
-
-interface CSVObject {
-  [key: string]: string;
-}
-
-const AddClass = ({ token }: Token): JSX.Element => {
+const AddClass = ({ token }: CommonInterface): JSX.Element => {
   const [file, setFile] = useState<File>();
   const [array, setArray] = useState<CSVObject[]>([]);
   const [classname, setClassname] = useState<string>("");
@@ -60,7 +51,7 @@ const AddClass = ({ token }: Token): JSX.Element => {
   };
 
   //submit class list
-  const handleOnSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOnSubmit = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
 
     const newClass = {
@@ -99,7 +90,7 @@ const AddClass = ({ token }: Token): JSX.Element => {
 
   const handleClassChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // console.log(e.target.value);
-    setClassname(e.target.value);
+    setClassname(String(e.target.value));
   };
 
   const handleClassSubmit = (): void => {

@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { CommonInterface } from "../Interface/Interface";
 const SERVER = import.meta.env.VITE_SERVER;
 
-interface TokenProp {
-  token: string;
-}
-
-const MainPage = ({ token }: TokenProp): JSX.Element => {
+const MainPage = ({ token }: CommonInterface): JSX.Element => {
   const navigate = useNavigate();
   const handleSubmitwat = () => {
     navigate("/main/submitwat");

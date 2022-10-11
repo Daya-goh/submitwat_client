@@ -5,8 +5,6 @@ import * as Yup from "yup";
 import YupPassword from "yup-password";
 const SERVER = import.meta.env.VITE_SERVER;
 
-//TODO validation for email
-
 YupPassword(Yup);
 const SignUpPage = () => {
   const navigate = useNavigate();

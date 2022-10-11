@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { HomeworkDetails } from "./HomeworkOverview";
+import { CommonInterface, Details } from "../Interface/Interface";
 const SERVER = import.meta.env.VITE_SERVER;
 
 const AddHw = ({
   columnName,
   classParam,
   token,
-}: HomeworkDetails): JSX.Element => {
+}: CommonInterface): JSX.Element => {
   const navigate = useNavigate();
   /* ---------------------- manipulating array ---------------------- */
-  interface Details {
-    student_id: null;
-    student_name: string;
-    status: string;
-  }
   // a state to store the statusArray so it can update the table component
   const [statusArray, setStatusArray] = useState<Details[]>([]);
 
@@ -46,7 +41,7 @@ const AddHw = ({
   }, []);
 
   // function to update the change in submission status
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const array = statusArray.map((item, index) => {
       if (index === Number(e.target.id) - 1) {
         item.status = e.target.value;
@@ -126,21 +121,21 @@ const AddHw = ({
                     value={each.status}
                     name="status"
                     onChange={(e) => handleChange(e)}
-                    id={index + 1}
+                    id={String(index + 1)}
                   >
                     <option id={String(index + 1)} value="null">
                       nil
                     </option>
-                    <option id={index + 1} value="not submitted">
+                    <option id={String(index + 1)} value="not submitted">
                       Not Submitted
                     </option>
-                    <option id={index + 1} value="absent">
+                    <option id={String(index + 1)} value="absent">
                       Absent
                     </option>
-                    <option id={index + 1} value="submitted">
+                    <option id={String(index + 1)} value="submitted">
                       Submitted
                     </option>
-                    <option id={index + 1} value="late">
+                    <option id={String(index + 1)} value="late">
                       Late
                     </option>
                   </select>

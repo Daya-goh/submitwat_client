@@ -4,15 +4,13 @@ const SERVER = import.meta.env.VITE_SERVER;
 
 import { Formik, useFormik } from "formik";
 import * as Yup from "yup";
+import { ClassDetail, CommonInterface } from "../Interface/Interface";
 
-export interface ClassDetail {
-  id: number;
-  name: string;
-  teacher: number;
-  class_name?: string;
-}
-
-const ClassOverview = ({ classParam, token, setColumnName }): JSX.Element => {
+const ClassOverview = ({
+  classParam,
+  token,
+  setColumnName,
+}: CommonInterface): JSX.Element => {
   const [yourClassHeader, setYourClassHeader] = useState([]);
   const [classList, setClassList] = useState<ClassDetail[]>([]);
   const navigate = useNavigate();
