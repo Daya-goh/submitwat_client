@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import AddClass from "../components/AddClass";
-import ClassList from "../components/ClassList";
+import { useNavigate } from "react-router-dom";
+import ListOfClass from "../components/ListOfClass";
 const SERVER = import.meta.env.VITE_SERVER;
 
 const SubmitwatOverview = ({ token, setClassParam }): JSX.Element => {
   const [classList, setClassList] = useState([]);
+  const navigate = useNavigate();
 
-  //! teachers' classes not uploaded when new class is added
   useEffect(() => {
     const url = `${SERVER}submitwat`;
     fetch(url, {
@@ -22,15 +22,27 @@ const SubmitwatOverview = ({ token, setClassParam }): JSX.Element => {
       });
   }, []);
 
+  // open popup form
+  const handleAdd = (): void => {
+    // console.log("add");
+    navigate("/main/submitwat/addclass");
+  };
+
   return (
     <div className="flex flex-col items-center gap-7">
       <h1 className="text-3xl">Submit Wat</h1>
 
       <div className="flex flex-row gap-4 items-center">
         <h3 className="text-2xl">Class</h3>
-        <AddClass token={token} />
+        <a
+          className="inline-block rounded-2xl border border-current px-2 py-2 text-sm font-medium text-slate-600 transition hover:rotate-2 hover:scale-110 focus:outline-none focus:ring active:text-indigo-500"
+          onClick={handleAdd}
+        >
+          Add +
+        </a>
+        {/* <AddClass token={token} /> */}
       </div>
-      <ClassList classList={classList} setClassParam={setClassParam} />
+      <ListOfClass classList={classList} setClassParam={setClassParam} />
     </div>
   );
 };

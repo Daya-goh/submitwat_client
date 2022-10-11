@@ -2,9 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 const SERVER = import.meta.env.VITE_SERVER;
 
+import { Formik, useFormik } from "formik";
+import * as Yup from "yup";
+
+export interface ClassDetail {
+  id: number;
+  name: string;
+  teacher: number;
+  class_name?: string;
+}
+
 const ClassOverview = ({ classParam, token, setColumnName }): JSX.Element => {
   const [yourClassHeader, setYourClassHeader] = useState([]);
-  const [classList, setClassList] = useState([]);
+  const [classList, setClassList] = useState<ClassDetail[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,24 +39,23 @@ const ClassOverview = ({ classParam, token, setColumnName }): JSX.Element => {
   };
 
   /* ------------------------- popup form ------------------------- */
-  const [input, setInput] = useState("");
-  const [date, setDate] = useState("");
-  const [statusMsg, setStatusMsg] = useState<string>(" ");
 
-  const handleAddHW = (e) => {
-    e.preventDefault();
-    console.log("go");
-    if (input === null || input === "" || date === null || date === "") {
-      setStatusMsg("*Required");
-    } else {
-      setStatusMsg("");
-      const keyword = {
-        keyword: input,
-        date: date,
-      };
-      console.log(keyword);
-      // console.log("click");
-      //create column
+  const formik = useFormik({
+    initialValues: {
+      assignmentName: "",
+      date: new Date().toLocaleDateString("en-CA"),
+    },
+    validationSchema: Yup.object({
+      assignmentName: Yup.string()
+        .trim("Assignment name cannot include spaces")
+        .strict(true)
+        .required("*Required"),
+      date: Yup.date()
+        .max(new Date(), "Cannot log future submissions")
+        .required("Required"),
+    }),
+    onSubmit: async (values) => {
+      alert(JSON.stringify(values, null, 2));
       const url = `${SERVER}submitwat/${classParam}/addhw`;
       fetch(url, {
         method: "POST",
@@ -54,7 +63,7 @@ const ClassOverview = ({ classParam, token, setColumnName }): JSX.Element => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(keyword),
+        body: JSON.stringify(values),
       })
         .then((response) => response.json())
         .then((data) => {
@@ -62,24 +71,28 @@ const ClassOverview = ({ classParam, token, setColumnName }): JSX.Element => {
           setColumnName(data.hwColumnName);
           navigate(`/main/submitwat/${classParam}/addhw/${data.hwColumnName}`);
         });
-    }
-  };
+    },
+  });
 
-  const handleChange = (e) => {
-    // console.log(e.target.value);
-    setInput(e.target.value);
-  };
-
-  const handleDate = (e) => {
-    // console.log(e.target.value);
-    setDate(e.target.value);
-  };
-
-  const handleHeader = (e) => {
+  /* ------------------- homework header button ------------------- */
+  const handleHeader = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log("click");
     console.log(e?.target.id);
     setColumnName(e.target.id);
     navigate(`/main/submitwat/${classParam}/${e.target.id}`);
+  };
+
+  /* --------------------- delete class button -------------------- */
+  const handleDelete = (): void => {
+    const url = `${SERVER}submitwat/${classParam}`;
+    fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((response) => response.json().then((data) => console.log(data)));
+    navigate(`/main/submitwat`);
   };
 
   return (
@@ -88,50 +101,39 @@ const ClassOverview = ({ classParam, token, setColumnName }): JSX.Element => {
       <label htmlFor="my-modal-4" className="modal cursor-pointer">
         <label className="modal-box relative">
           <h3 className="text-lg font-bold">Homework details</h3>
+
           <div>
-            <h1>Name of assignment</h1>
-            <form onSubmit={(e) => handleAddHW(e)}>
+            <h1>Assignment Name</h1>
+
+            <form onSubmit={formik.handleSubmit}>
               {/* <input type="date" /> */}
               <input
                 type="text"
-                name="homework"
-                onChange={handleChange}
-                value={input}
+                name="assignmentName"
+                onChange={formik.handleChange}
+                value={formik.values.assignmentName}
                 className="input input-bordered w-full max-w-xs"
               />
-              <p>{statusMsg}</p>
+              {formik.touched.assignmentName && formik.errors.assignmentName ? (
+                <div className="text-sm text-red-500 italic">
+                  {formik.errors.assignmentName}
+                </div>
+              ) : null}
               <input
                 type="Date"
                 name="date"
-                onChange={handleDate}
+                onChange={formik.handleChange}
+                value={formik.values.date}
                 className="input input-bordered w-full max-w-xs"
               />
-              <p>{statusMsg}</p>
+              {formik.touched.date && formik.errors.date ? (
+                <div className="text-sm text-rose-500 italic">
+                  {formik.errors.date}
+                </div>
+              ) : null}
 
               {/* <button type="submit">Add</button> */}
-              <a
-                className="inline-block rounded-full border border-indigo-600 p-3 text-indigo-600 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring active:bg-indigo-500"
-                onClick={(e) => {
-                  handleAddHW(e);
-                }}
-              >
-                <span className="sr-only"> Add </span>
-
-                <svg
-                  className="h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
-              </a>
+              <button type="submit">Add</button>
             </form>
           </div>
           {/* <p className="py-4">Test</p> */}
@@ -154,6 +156,35 @@ const ClassOverview = ({ classParam, token, setColumnName }): JSX.Element => {
         </label>
       </a>
 
+      <div>
+        <label htmlFor="my-modal-3" className="btn btn-error">
+          Delete Class
+        </label>
+        <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+        <div className="modal">
+          <div className="modal-box relative">
+            <label
+              htmlFor="my-modal-3"
+              className="btn btn-sm btn-error btn-circle absolute right-2 top-2"
+            >
+              ✕
+            </label>
+            <h3 className="text-lg font-bold">Confirm deletion?</h3>
+            <p className="py-4">
+              Do you really want to delete this Class Info? All data will be
+              lost!
+            </p>
+            <label
+              htmlFor="my-modal-3"
+              className="btn btn-error"
+              onClick={() => handleDelete()}
+            >
+              Confirm
+            </label>
+          </div>
+        </div>
+      </div>
+
       <div className="overflow-hidden overflow-x-auto rounded-lg border border-gray-20 w-4/5">
         <table className="min-w-full divide-y divide-gray-200 text-sm">
           <thead className="bg-gray-100">
@@ -171,7 +202,15 @@ const ClassOverview = ({ classParam, token, setColumnName }): JSX.Element => {
             {classList.map((student, index) => (
               <tr key={index}>
                 {yourClassHeader.map((header, index) => (
-                  <td key={index} className="text-center">
+                  <td
+                    key={index}
+                    className={`text-center ${
+                      student[header.name] === `not submitted` ||
+                      student[header.name] === `late`
+                        ? `bg-red-50`
+                        : ""
+                    } ${student[header.name] === `absent` ? `bg-blue-50` : ""}`}
+                  >
                     {student[header.name]}
                   </td>
                 ))}

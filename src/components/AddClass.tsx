@@ -1,24 +1,25 @@
 import React, { useState } from "react";
-import Modal from "react-modal";
 
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { string } from "yup";
 const SERVER = import.meta.env.VITE_SERVER;
 
-const AddClass = ({ token }): JSX.Element => {
-  const [visibile, setVisible] = useState<boolean>(false);
+export interface Token {
+  token: string;
+}
+
+interface CSVObject {
+  [key: string]: string;
+}
+
+const AddClass = ({ token }: Token): JSX.Element => {
   const [file, setFile] = useState<File>();
-  const [array, setArray] = useState<any>([]); //! find out type of object
+  const [array, setArray] = useState<CSVObject[]>([]);
   const [classname, setClassname] = useState<string>("");
   const [statusMsg, setStatusMsg] = useState<string>(" ");
+  const navigate = useNavigate();
 
   const fileReader = new FileReader();
-
-  // open popup form
-  const handleAdd = (): void => {
-    // console.log("add");
-    setVisible(true);
-    setStatusMsg(" ");
-  };
 
   // handle onChange for uploading form
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,13 +46,14 @@ const AddClass = ({ token }): JSX.Element => {
     // console.log(string.slice(string.indexOf("\n") + 1).split("\r"));
     const array = newCsvRows.map((i) => {
       const values = i.split(",");
-      const obj = csvHeader.reduce((object, header, index) => {
+      const obj = csvHeader.reduce((object: CSVObject, header, index) => {
+        console.log(object);
         object[header] = values[index];
         return object;
       }, {});
       return obj;
     });
-    // console.log(array);
+    console.log(array);
     setArray(array);
     return array;
     ``;
@@ -95,14 +97,13 @@ const AddClass = ({ token }): JSX.Element => {
 
   const headerKeys = Object.keys(Object.assign({}, ...array));
 
-  const handleClassChange = (e) => {
+  const handleClassChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // console.log(e.target.value);
     setClassname(e.target.value);
   };
 
   const handleClassSubmit = (): void => {
     // console.log(classname);
-    setVisible(false);
     const newClass = {
       keyword: classname,
     };
@@ -117,75 +118,63 @@ const AddClass = ({ token }): JSX.Element => {
       },
       body: JSON.stringify(newClass),
     }).then((data) => console.log(data));
+    navigate("/main/submitwat");
   };
 
   return (
     <div>
-      <a
-        className="inline-block rounded-2xl border border-current px-2 py-2 text-sm font-medium text-slate-600 transition hover:rotate-2 hover:scale-110 focus:outline-none focus:ring active:text-indigo-500"
-        onClick={handleAdd}
-      >
-        Add +
-      </a>
-      <Modal
-        isOpen={visibile}
-        ariaHideApp={false}
-        onRequestClose={() => setVisible(false)}
-        className="bg-slate-50"
-      >
-        <div>
-          <form encType="multipart/form-data">
-            <h2>Add Class</h2>
-            <div>
-              <label>Class</label>
-              <input
-                type="text"
-                name="className"
-                className="border-2"
-                onChange={(e) => handleClassChange(e)}
-              ></input>
-            </div>
-            <h4>{statusMsg}</h4>
-
+      <div>
+        <form encType="multipart/form-data">
+          <h2>Add Class</h2>
+          <div>
+            <label>Class</label>
             <input
-              type={"file"}
-              id={"csvFileInput"}
-              accept={".csv"}
-              onChange={handleOnChange}
-            />
+              type="text"
+              name="className"
+              className="border-2"
+              onChange={(e) => handleClassChange(e)}
+            ></input>
+          </div>
+          <h4>{statusMsg}</h4>
 
-            <button
-              onClick={(e) => {
-                handleOnSubmit(e);
-              }}
-            >
-              IMPORT CSV
-            </button>
-          </form>
+          <input
+            type={"file"}
+            id={"csvFileInput"}
+            accept={".csv"}
+            onChange={handleOnChange}
+          />
 
-          {/* show content of uploaded file */}
-          <table>
-            <thead>
-              <tr key={"header"}>
-                {headerKeys.map((key) => (
-                  <th key={key}>{key}</th>
+          <button
+            onClick={(e) => {
+              handleOnSubmit(e);
+            }}
+          >
+            IMPORT CSV
+          </button>
+        </form>
+
+        {/* show content of uploaded file */}
+        <table>
+          <thead>
+            <tr key={"header"}>
+              {headerKeys.map((key) => (
+                <th key={key}>{key}</th>
+              ))}
+            </tr>
+          </thead>
+
+          <tbody>
+            {array.map((item) => (
+              <tr key={item.id}>
+                {Object.values(item).map((val, index) => (
+                  <td key={index}>{val}</td>
                 ))}
               </tr>
-            </thead>
-
-            <tbody>
-              {array.map((item) => (
-                <tr key={item.id}>
-                  {Object.values(item).map((val, index) => (
-                    <td key={index}>{val}</td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <button onClick={() => handleClassSubmit()}>Submit</button>
-        </div>
-      </Modal>
+            ))}
+          </tbody>
+        </table>
+        <button onClick={() => handleClassSubmit()}>Submit</button>
+      </div>
     </div>
   );
 };

@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { HomeworkDetails } from "./HomeworkOverview";
 const SERVER = import.meta.env.VITE_SERVER;
 
-const AddHw = ({ columnName, classParam, token }): JSX.Element => {
+const AddHw = ({
+  columnName,
+  classParam,
+  token,
+}: HomeworkDetails): JSX.Element => {
   const navigate = useNavigate();
   /* ---------------------- manipulating array ---------------------- */
   interface Details {
@@ -91,8 +96,6 @@ const AddHw = ({ columnName, classParam, token }): JSX.Element => {
 
   return (
     <div>
-      <>Hello</>
-
       <div>
         <button onClick={handleSave} className="btn btn-primary btn-square">
           Save
@@ -125,7 +128,7 @@ const AddHw = ({ columnName, classParam, token }): JSX.Element => {
                     onChange={(e) => handleChange(e)}
                     id={index + 1}
                   >
-                    <option id={index + 1} value="null">
+                    <option id={String(index + 1)} value="null">
                       nil
                     </option>
                     <option id={index + 1} value="not submitted">
@@ -136,6 +139,9 @@ const AddHw = ({ columnName, classParam, token }): JSX.Element => {
                     </option>
                     <option id={index + 1} value="submitted">
                       Submitted
+                    </option>
+                    <option id={index + 1} value="late">
+                      Late
                     </option>
                   </select>
                 </form>

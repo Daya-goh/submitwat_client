@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+import AddClass from "./components/AddClass";
 import Layout from "./components/Layout";
 import AddHw from "./pages/AddHw";
-import ClassOverview from "./pages/ClassOverview";
+import ClassOverview from "./pages/ClassHomeworkOverview";
 import HomeworkOverview from "./pages/HomeworkOverview";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
@@ -14,8 +15,6 @@ function App() {
   const [token, setToken] = useState<string>("");
   const [classParam, setClassParam] = useState<string>("");
   const [columnName, setColumnName] = useState<string>("");
-
-  console.log(token);
 
   return (
     <div className="App">
@@ -33,6 +32,10 @@ function App() {
                   setClassParam={setClassParam}
                 />
               }
+            />
+            <Route
+              path="/main/submitwat/addclass"
+              element={<AddClass token={token} />}
             />
             <Route
               path="/main/submitwat/:id"

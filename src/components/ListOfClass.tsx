@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ClassDetail } from "../pages/ClassHomeworkOverview";
 // const SERVER = import.meta.env.VITE_SERVER;
 
-const ClassList = ({ classList, setClassParam }): JSX.Element => {
+interface ClassInterface {
+  classList: ClassDetail[];
+  setClassParam: Dispatch<SetStateAction<string>>;
+}
+
+const ListOfClass = ({
+  classList,
+  setClassParam,
+}: ClassInterface): JSX.Element => {
   const navigate = useNavigate();
 
-  const handleClass = (e): void => {
-    setClassParam(e.target.id);
-    navigate(`/main/submitwat/${e.target.id}`);
+  const handleClass = (e: React.MouseEvent): void => {
+    setClassParam((e.target as HTMLButtonElement).id);
+    navigate(`/main/submitwat/${(e.target as HTMLButtonElement).id}`);
   };
+
+  console.log(classList);
 
   return (
     <div>
@@ -37,4 +48,4 @@ const ClassList = ({ classList, setClassParam }): JSX.Element => {
   );
 };
 
-export default ClassList;
+export default ListOfClass;
