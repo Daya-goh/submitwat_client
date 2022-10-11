@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NoteTodo from "../components/NoteTodo";
-import { CommonInterface, Details, Note } from "../Interface/Interface";
+import {
+  classHeaderInterface,
+  CommonInterface,
+  Details,
+  Note,
+} from "../Interface/Interface";
 const SERVER = import.meta.env.VITE_SERVER;
 
 const HomeworkOverview = ({
@@ -9,13 +14,17 @@ const HomeworkOverview = ({
   token,
   classParam,
 }: CommonInterface) => {
-  const [yourClassHeader, setYourClassHeader] = useState([]);
+  const [yourClassHeader, setYourClassHeader] = useState<
+    classHeaderInterface[]
+  >([]);
   const [classList, setClassList] = useState<Details[]>([]);
   const [submitted, setSubmitted] = useState(null);
   const [list, setList] = useState<Details[]>([]);
   const [noteContent, setNoteContent] = useState<Note[]>([]);
   const [refresh, setRefresh] = useState<number>(0);
   const navigate = useNavigate();
+
+  console.log(yourClassHeader);
 
   useEffect(() => {
     const urlClassList = `${SERVER}submitwat/${classParam}/${columnName}`;

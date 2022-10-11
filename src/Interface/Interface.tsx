@@ -4,6 +4,10 @@ export interface CSVObject {
   [key: string]: string;
 }
 
+export interface classHeaderInterface {
+  name: string;
+}
+
 export interface ClassInterface {
   classList?: ClassDetail[];
   token?: string;
@@ -44,9 +48,9 @@ export interface CommonInterface {
 }
 
 export interface NoteInterface {
-  token: string;
-  classParam: string;
-  columnName: string;
+  token?: string;
+  classParam?: string;
+  columnName?: string;
   refresh: number;
   noteContent: Note[];
   setNoteContent: Dispatch<SetStateAction<Note[]>>;
