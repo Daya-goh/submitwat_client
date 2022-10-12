@@ -16,7 +16,7 @@ const ClassOverview = ({
   token,
   setColumnName,
 }: CommonInterface): JSX.Element => {
-  const [yourClassHeader, setYourClassHeader] = useState<YourClassHeader[]>([]);
+  const [yourClassHeader, setYourClassHeader] = useState<ClassDetail[]>([]);
   const [classList, setClassList] = useState<ClassDetail[]>([]);
   const navigate = useNavigate();
 
@@ -97,7 +97,7 @@ const ClassOverview = ({
     }).then((response) => response.json().then((data) => console.log(data)));
     navigate(`/main/submitwat`);
   };
-
+  console.log(classList);
   return (
     <div className="flex flex-col gap-2 items-center">
       <SubmitWatBanner />
@@ -223,9 +223,12 @@ const ClassOverview = ({
         <table className="min-w-full divide-y divide-gray-200 text-sm">
           <thead className="bg-gray-100">
             <tr className="h-8">
-              {yourClassHeader.map((header, index) => (
+              {yourClassHeader.map((header: YourClassHeader, index) => (
                 <th key={index} id={String(index)}>
-                  <button onClick={(e) => handleHeader(e)} id={header.name}>
+                  <button
+                    onClick={(e) => handleHeader(e)}
+                    id={String(header.name)}
+                  >
                     {header.name}
                   </button>
                 </th>

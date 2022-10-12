@@ -20,7 +20,7 @@ export interface Details {
   status: string;
 }
 
-export interface ClassDetail {
+export interface ClassDetail extends YourClassHeader {
   id: number;
   name: string;
   teacher: number;
@@ -59,5 +59,5 @@ export interface NoteInterface {
 }
 
 export interface YourClassHeader {
-  name: string;
+  [key: string]: string | number | undefined;
 }
