@@ -82,9 +82,9 @@ const NoteTodo = ({
     // setRefresh(true);
   };
 
-  const handleNoteDelete = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNoteDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     const notesDelete = {
-      id: Number(e.target.id) + 1,
+      id: e.currentTarget.id + 1,
     };
 
     const notesStatusURL = `${SERVER}submitwat/${classParam}/${columnName}/note`;

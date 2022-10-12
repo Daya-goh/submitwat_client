@@ -19,7 +19,7 @@ const HomeworkOverview = ({
     classHeaderInterface[]
   >([]);
   const [classList, setClassList] = useState<Details[]>([]);
-  const [submitted, setSubmitted] = useState(null);
+  const [submitted, setSubmitted] = useState<number>(0);
   const [list, setList] = useState<Details[]>([]);
   const [noteContent, setNoteContent] = useState<Note[]>([]);
   const [refresh, setRefresh] = useState<number>(0);
