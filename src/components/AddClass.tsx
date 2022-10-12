@@ -51,7 +51,7 @@ const AddClass = ({ token }: CommonInterface): JSX.Element => {
   };
 
   //submit class list
-  const handleOnSubmit = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleOnSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     const newClass = {

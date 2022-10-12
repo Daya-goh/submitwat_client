@@ -25,6 +25,7 @@ export interface ClassDetail {
   name: string;
   teacher: number;
   class_name?: string;
+  student_id?: number;
 }
 
 export interface Note {
@@ -55,4 +56,8 @@ export interface NoteInterface {
   noteContent: Note[];
   setNoteContent: Dispatch<SetStateAction<Note[]>>;
   setRefresh: Dispatch<SetStateAction<number>>;
+}
+
+export interface YourClassHeader {
+  name: string;
 }

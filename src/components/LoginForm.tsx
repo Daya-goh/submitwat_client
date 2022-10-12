@@ -36,7 +36,7 @@ const LoginForm = ({ setToken }: CommonInterface): JSX.Element => {
         navigate("/login");
       } else {
         //   setUsername(data.userid);
-        setToken(data.token);
+        setToken && setToken(data.token);
         navigate("/main");
       }
     },

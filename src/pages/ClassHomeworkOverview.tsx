@@ -4,7 +4,11 @@ const SERVER = import.meta.env.VITE_SERVER;
 
 import { Formik, useFormik } from "formik";
 import * as Yup from "yup";
-import { ClassDetail, CommonInterface } from "../Interface/Interface";
+import {
+  ClassDetail,
+  CommonInterface,
+  YourClassHeader,
+} from "../Interface/Interface";
 import SubmitWatBanner from "../SubmitWatBanner";
 
 const ClassOverview = ({
@@ -12,7 +16,7 @@ const ClassOverview = ({
   token,
   setColumnName,
 }: CommonInterface): JSX.Element => {
-  const [yourClassHeader, setYourClassHeader] = useState([]);
+  const [yourClassHeader, setYourClassHeader] = useState<YourClassHeader[]>([]);
   const [classList, setClassList] = useState<ClassDetail[]>([]);
   const navigate = useNavigate();
 
@@ -67,7 +71,7 @@ const ClassOverview = ({
         .then((response) => response.json())
         .then((data) => {
           console.log(data.hwColumnName);
-          setColumnName(data.hwColumnName);
+          setColumnName && setColumnName(data.hwColumnName);
           navigate(`/main/submitwat/${classParam}/addhw/${data.hwColumnName}`);
         });
     },
@@ -77,7 +81,7 @@ const ClassOverview = ({
   const handleHeader = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log("click");
     console.log(e?.target.id);
-    setColumnName(e.target.id);
+    setColumnName && setColumnName(e.target.id);
     navigate(`/main/submitwat/${classParam}/${e.target.id}`);
   };
 
