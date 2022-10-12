@@ -17,7 +17,7 @@ const AddHw = ({
 
   // to fetch db's homework column
   useEffect(() => {
-    const hwURL = `${SERVER}/submitwat/${classParam}/addhw/${columnName}`;
+    const hwURL = `${SERVER}submitwat/${classParam}/addhw/${columnName}`;
     fetch(hwURL, {
       headers: {
         "Content-Type": "application/json",

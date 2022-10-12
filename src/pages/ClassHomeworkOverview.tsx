@@ -234,6 +234,7 @@ const ClassOverview = ({
                 {yourClassHeader.map((header, index) => (
                   <td
                     key={index}
+                    id={String(student.student_id)}
                     className={`text-center ${
                       student[header.name] === `not submitted` ||
                       student[header.name] === `late`

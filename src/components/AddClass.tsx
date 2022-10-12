@@ -139,6 +139,7 @@ const AddClass = ({ token }: CommonInterface): JSX.Element => {
             onClick={(e) => {
               handleOnSubmit(e);
             }}
+            className="btn btn-primary"
           >
             IMPORT CSV
           </button>

@@ -67,49 +67,6 @@ const ListOfClass = ({
             </div>
           ))}
       </div>
-
-      {/* <div className="card w-96 bg-white-50 shadow-xl">
-        <figure className="px-10 pt-10"></figure>
-        <div className="card-body items-center text-center">
-          <h2 className="card-title">Shoes!</h2>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
-          <div className="card-actions">
-            <button className="btn bg-blue-400 border-blue-400 hover:bg-blue-300 hover:border-blue-300 onClick={(e)=>handleClass(e)}">
-              <span className="font-thin">Enter</span>
-            </button>
-          </div>
-        </div>
-      </div> */}
-
-      {/* <table className="table w-full">
-        <thead>
-          <tr>
-            <th>
-              {" "}
-              <a
-                className="inline-block rounded-2xl border border-current px-2 py-2 text-sm font-medium text-slate-600 transition hover:rotate-2 hover:scale-110 focus:outline-none focus:ring active:text-indigo-500"
-                onClick={handleAdd}
-              >
-                + class
-              </a>
-            </th>
-            <th>Class Name</th>
-          </tr>
-        </thead>
-        {classList &&
-          classList.map((each, index) => (
-            <tbody key={index}>
-              <tr>
-                <th className="text-center">{index + 1}</th>
-                <td className="text-center">
-                  <button onClick={(e) => handleClass(e)} id={each.class_name}>
-                    {each.class_name}{" "}
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          ))}
-      </table> */}
     </div>
   );
 };
