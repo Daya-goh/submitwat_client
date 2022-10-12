@@ -78,11 +78,11 @@ const ClassOverview = ({
   });
 
   /* ------------------- homework header button ------------------- */
-  const handleHeader = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleHeader = (e: React.MouseEvent<HTMLButtonElement>) => {
     console.log("click");
-    console.log(e?.target.id);
-    setColumnName && setColumnName(e.target.id);
-    navigate(`/main/submitwat/${classParam}/${e.target.id}`);
+    console.log(e?.currentTarget.id);
+    setColumnName && setColumnName(e.currentTarget.id);
+    navigate(`/main/submitwat/${classParam}/${e.currentTarget.id}`);
   };
 
   /* --------------------- delete class button -------------------- */
@@ -240,10 +240,7 @@ const ClassOverview = ({
                     key={index}
                     id={String(student.student_id)}
                     className={`text-center ${
-                      student[header.name] === `not submitted` ||
-                      student[header.name] === `late`
-                        ? `bg-red-100`
-                        : ""
+                      student[header.name] === `late` ? `bg-red-100` : ""
                     } ${
                       student[header.name] === `absent` ? `bg-blue-100` : ""
                     }`}

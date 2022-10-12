@@ -133,7 +133,7 @@ const HomeworkOverview = ({
           <div className="flex flex-row gap-10 items-center">
             <div
               className="radial-progress bg-blue-800 text-primary-content border-4 border-blue-800"
-              style={{ "--value": (submitted / 4) * 100 }}
+              style={{ ["--value" as string]: (submitted / 4) * 100 }}
             >
               {submitted}
             </div>
