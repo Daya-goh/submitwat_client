@@ -43,15 +43,14 @@ const LoginForm = ({ setToken }: CommonInterface): JSX.Element => {
   });
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className="flex m-6">
       <form
         onSubmit={formik.handleSubmit}
-        className="flex flex-col gap-4 items-center bg-slate-50 bg-opacity-70 p-5 mx-14 rounded-md"
+        className="flex flex-col gap-4 items-center bg-opacity-70 p-5 mx-14 rounded-md"
       >
         <div className="flex flex-col">
           <div className="flex flex-row w-72 justify-between">
-            <div className="flex self-center text-blue-800 font-light mr-2">
+            <div className="flex self-center text-black-800 font-light mr-3">
               Username
             </div>
             <input
@@ -62,16 +61,17 @@ const LoginForm = ({ setToken }: CommonInterface): JSX.Element => {
               value={formik.values.username}
               className="input input-bordered"
             />
-            {formik.touched.username && formik.errors.username ? (
-              <div className="text-sm text-red-500 italic">
-                {formik.errors.username}
-              </div>
-            ) : null}
           </div>
+          {formik.touched.username && formik.errors.username ? (
+            <div className="text-sm text-red-500 italic">
+              {formik.errors.username}
+            </div>
+          ) : null}
         </div>
+
         <div className="flex flex-col">
           <div className="flex flex-row w-72 justify-between">
-            <div className="flex self-center text-blue-800 font-light mr-3">
+            <div className="flex self-center text-black-800 font-light mr-3">
               Password
             </div>
             <input
@@ -91,11 +91,15 @@ const LoginForm = ({ setToken }: CommonInterface): JSX.Element => {
         </div>
         <button
           type="submit"
-          className="block w-full px-12 py-3 text-sm font-medium text-white bg-rose-500 border border-rose-500 rounded md:w-auto active:text-opacity-75 hover:bg-blue-500 hover:text-white focus:outline-none focus:ring drop-shadow-xl"
+          className="block w-full px-12 py-3 text-sm font-medium text-white border bg-blue-900 border-blue-900 rounded md:w-auto active:text-opacity-75 hover:bg-blue-800 hover:border-blue-800 hover:text-white focus:outline-none focus:ring drop-shadow-xl"
         >
           Login
         </button>
-        <Link to="/signup" className="text-xs hover:text-cyan-700">
+
+        <Link
+          to="/signup"
+          className="text-xs text-blue-900 hover:text-blue-800"
+        >
           Create a new account
         </Link>
       </form>

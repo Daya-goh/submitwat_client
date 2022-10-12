@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NoteTodo from "../components/NoteTodo";
+import SubmitWatBanner from "../SubmitWatBanner";
 import {
   classHeaderInterface,
   CommonInterface,
@@ -119,118 +120,133 @@ const HomeworkOverview = ({
   };
 
   return (
-    <div>
-      <h1>
-        {columnName} {classParam}
-      </h1>
-      <div
-        className="radial-progress"
-        style={{ "--value": (submitted / 4) * 100 }}
-      >
-        {submitted}
+    <div className="flex flex-col items-center gap-5">
+      <SubmitWatBanner />
+      <div className="flex flex-row justify-center w-screen px-8">
+        <h1 className="text-3xl">
+          {columnName} ({classParam})
+        </h1>
       </div>
 
-      <button onClick={handleSave} className="btn btn-primary btn-square">
-        Save
-      </button>
-      <div className="overflow-hidden overflow-x-auto rounded-lg border border-gray-20 w-2/5">
-        <table className="min-w-full divide-y divide-gray-200 text-sm">
-          <thead className="bg-gray-100">
-            <tr>
-              {yourClassHeader.map((header, index) => (
-                <th key={index} id={String(index)}>
-                  <h3 id={header.name}>{header.name}</h3>
-                </th>
+      <div className="flex flex-row w-screen px-32 py-10">
+        <div className="flex flex-col w-2/3 gap-3 items-center">
+          <div className="flex flex-row gap-10 items-center">
+            <div
+              className="radial-progress bg-blue-800 text-primary-content border-4 border-blue-800"
+              style={{ "--value": (submitted / 4) * 100 }}
+            >
+              {submitted}
+            </div>
+            <button
+              onClick={handleSave}
+              className="btn bg-sky-800 border-sky-800 btn-square "
+            >
+              Save
+            </button>
+            <div>
+              <label htmlFor="my-modal-3" className="btn btn-error">
+                Delete homework
+              </label>
+            </div>
+
+            <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+            <div className="modal">
+              <div className="modal-box relative">
+                <label
+                  htmlFor="my-modal-3"
+                  className="btn btn-sm btn-error btn-circle absolute right-2 top-2"
+                >
+                  ✕
+                </label>
+                <h3 className="text-lg font-bold">Confirm deletion?</h3>
+                <p className="py-4">
+                  Do you really want to delete the homework? All data will be
+                  lost!
+                </p>
+                <label
+                  htmlFor="my-modal-3"
+                  className="btn btn-error"
+                  onClick={() => handleDelete()}
+                >
+                  Confirm
+                </label>
+              </div>
+            </div>
+          </div>
+          <div className="overflow-hidden overflow-x-auto rounded-sm border border-gray-20 w-3/5">
+            <table className="min-w-full divide-y divide-gray-200 text-sm">
+              <thead className="bg-gray-100">
+                <tr className="h-8">
+                  {yourClassHeader.map((header, index) => (
+                    <th key={index} id={String(index)}>
+                      <h3 id={header.name}>{header.name}</h3>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {classList.map((student, index) => (
+                  <tr key={index} className="h-8">
+                    <td className="text-center">{student.student_id}</td>
+                    <td className="text-center">{student.student_name}</td>
+                    <td key={index} className="text-center">
+                      <form>
+                        <select
+                          key={index + 1}
+                          value={student.status}
+                          name="status"
+                          onChange={(e) => handleChange(e)}
+                          id={String(index + 1)}
+                        >
+                          <option id={String(index + 1)} value="null">
+                            nil
+                          </option>
+                          <option id={String(index + 1)} value="not submitted">
+                            Not Submitted
+                          </option>
+                          <option id={String(index + 1)} value="absent">
+                            Absent
+                          </option>
+                          <option id={String(index + 1)} value="submitted">
+                            Submitted
+                          </option>
+                          <option id={String(index + 1)} value="late">
+                            Late
+                          </option>
+                        </select>
+                      </form>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-5 my-20">
+          <div className="card w-72 bg-base-100 shadow-xl">
+            <div className="card-body flex flex-col items-center">
+              <h2 className="card-title">Not Submitted</h2>
+              {list.map((name, index) => (
+                <p key={index}>{name.student_name}</p>
               ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {classList.map((student, index) => (
-              <tr key={index}>
-                <td className="text-center">{student.student_id}</td>
-                <td className="text-center">{student.student_name}</td>
-                <td key={index} className="text-center">
-                  <form>
-                    <select
-                      key={index + 1}
-                      value={student.status}
-                      name="status"
-                      onChange={(e) => handleChange(e)}
-                      id={String(index + 1)}
-                    >
-                      <option id={String(index + 1)} value="null">
-                        nil
-                      </option>
-                      <option id={String(index + 1)} value="not submitted">
-                        Not Submitted
-                      </option>
-                      <option id={String(index + 1)} value="absent">
-                        Absent
-                      </option>
-                      <option id={String(index + 1)} value="submitted">
-                        Submitted
-                      </option>
-                      <option id={String(index + 1)} value="late">
-                        Late
-                      </option>
-                    </select>
-                  </form>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="card w-72 bg-base-100 shadow-xl">
-        <div className="card-body flex flex-col items-center">
-          <h2 className="card-title">Not Submitted</h2>
-          {list.map((name, index) => (
-            <p key={index}>{name.student_name}</p>
-          ))}
-          <div className="card-actions justify-end">
-            {/* <button className="btn btn-primary">Buy Now</button> */}
+              <div className="card-actions justify-end">
+                {/* <button className="btn btn-primary">Buy Now</button> */}
+              </div>
+            </div>
           </div>
+
+          <NoteTodo
+            token={token}
+            classParam={classParam}
+            columnName={columnName}
+            setRefresh={setRefresh}
+            refresh={refresh}
+            noteContent={noteContent}
+            setNoteContent={setNoteContent}
+          />
         </div>
       </div>
-
-      <div>
-        <label htmlFor="my-modal-3" className="btn btn-error">
-          Delete homework
-        </label>
-
-        <input type="checkbox" id="my-modal-3" className="modal-toggle" />
-        <div className="modal">
-          <div className="modal-box relative">
-            <label
-              htmlFor="my-modal-3"
-              className="btn btn-sm btn-error btn-circle absolute right-2 top-2"
-            >
-              ✕
-            </label>
-            <h3 className="text-lg font-bold">Confirm deletion?</h3>
-            <p className="py-4">
-              Do you really want to delete the homework? All data will be lost!
-            </p>
-            <label
-              htmlFor="my-modal-3"
-              className="btn btn-error"
-              onClick={() => handleDelete()}
-            >
-              Confirm
-            </label>
-          </div>
-        </div>
-      </div>
-      <NoteTodo
-        token={token}
-        classParam={classParam}
-        columnName={columnName}
-        setRefresh={setRefresh}
-        refresh={refresh}
-        noteContent={noteContent}
-        setNoteContent={setNoteContent}
-      />
     </div>
   );
 };

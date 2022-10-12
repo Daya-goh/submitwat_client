@@ -101,20 +101,25 @@ const NoteTodo = ({
 
   return (
     <div>
-      <div>
-        <input
-          type="text"
-          placeholder="Type here"
-          className="input input-bordered input-sm w-full max-w-xs"
-          onChange={(e) => handleNoteChange(e)}
-        />
-        <p>{status}</p>
-        <button className="btn btn-primary" onClick={() => handleNoteAdd()}>
-          add
-        </button>
-      </div>
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
+          <div className="flex flex-row gap-2">
+            <div>
+              <input
+                type="text"
+                placeholder="Type here"
+                className="input input-bordered input-sm w-full max-w-xs"
+                onChange={(e) => handleNoteChange(e)}
+              />
+              <p className="text-xs text-red-500">{status}</p>
+            </div>
+            <div
+              className="bg-blue-500 w-12 h-8 rounded-md flex justify-center items-center"
+              onClick={() => handleNoteAdd()}
+            >
+              <span>&#8594;</span>
+            </div>
+          </div>
           <h2 className="card-title">Notes</h2>
         </div>
         <div>

@@ -5,6 +5,7 @@ const SERVER = import.meta.env.VITE_SERVER;
 import { Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import { ClassDetail, CommonInterface } from "../Interface/Interface";
+import SubmitWatBanner from "../SubmitWatBanner";
 
 const ClassOverview = ({
   classParam,
@@ -94,101 +95,132 @@ const ClassOverview = ({
   };
 
   return (
-    <div>
-      <input type="checkbox" id="my-modal-4" className="modal-toggle" />
-      <label htmlFor="my-modal-4" className="modal cursor-pointer">
-        <label className="modal-box relative">
-          <h3 className="text-lg font-bold">Homework details</h3>
+    <div className="flex flex-col gap-2 items-center">
+      <SubmitWatBanner />
 
-          <div>
-            <h1>Assignment Name</h1>
+      <div className="flex flex-row ">
+        {/* new homework modal */}
+        <div>
+          <input type="checkbox" id="my-modal-4" className="modal-toggle" />
+          <label htmlFor="my-modal-4" className="modal cursor-pointer">
+            <label className="modal-box relative">
+              <h3 className="text-lg font-bold">Homework details</h3>
 
-            <form onSubmit={formik.handleSubmit}>
-              {/* <input type="date" /> */}
-              <input
-                type="text"
-                name="assignmentName"
-                onChange={formik.handleChange}
-                value={formik.values.assignmentName}
-                className="input input-bordered w-full max-w-xs"
-              />
-              {formik.touched.assignmentName && formik.errors.assignmentName ? (
-                <div className="text-sm text-red-500 italic">
-                  {formik.errors.assignmentName}
-                </div>
-              ) : null}
-              <input
-                type="Date"
-                name="date"
-                onChange={formik.handleChange}
-                value={formik.values.date}
-                className="input input-bordered w-full max-w-xs"
-              />
-              {formik.touched.date && formik.errors.date ? (
-                <div className="text-sm text-rose-500 italic">
-                  {formik.errors.date}
-                </div>
-              ) : null}
+              <div>
+                <form
+                  onSubmit={formik.handleSubmit}
+                  className="flex flex-col items-center gap-3"
+                >
+                  {/* <input type="date" /> */}
+                  <h1>Assignment Name</h1>
+                  <input
+                    type="text"
+                    name="assignmentName"
+                    onChange={formik.handleChange}
+                    value={formik.values.assignmentName}
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                  {formik.touched.assignmentName &&
+                  formik.errors.assignmentName ? (
+                    <div className="text-sm text-red-500 italic">
+                      {formik.errors.assignmentName}
+                    </div>
+                  ) : null}
+                  <input
+                    type="Date"
+                    name="date"
+                    onChange={formik.handleChange}
+                    value={formik.values.date}
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                  {formik.touched.date && formik.errors.date ? (
+                    <div className="text-sm text-rose-500 italic">
+                      {formik.errors.date}
+                    </div>
+                  ) : null}
 
-              {/* <button type="submit">Add</button> */}
-              <button type="submit">Add</button>
-            </form>
+                  <button
+                    type="submit"
+                    className="btn bg-blue-400 border-blue-400 hover:bg-blue-300 hover:border-blue-300"
+                  >
+                    Add
+                  </button>
+                </form>
+              </div>
+            </label>
+          </label>
+        </div>
+
+        {/* delete homework modal container*/}
+        <div>
+          <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+          <div className="modal">
+            <div className="modal-box relative">
+              <label
+                htmlFor="my-modal-3"
+                className="btn btn-sm btn-error btn-circle absolute right-2 top-2"
+              >
+                ✕
+              </label>
+              <h3 className="text-lg font-bold">Confirm deletion?</h3>
+              <p className="py-4">
+                Do you really want to delete this Class Info? All data will be
+                lost!
+              </p>
+
+              {/* delete class modal */}
+              <label
+                htmlFor="my-modal-3"
+                className="btn btn-error"
+                onClick={() => handleDelete()}
+              >
+                Confirm
+              </label>
+            </div>
           </div>
-          {/* <p className="py-4">Test</p> */}
-        </label>
-      </label>
+        </div>
 
-      <h1>Overview of class</h1>
+        {/* buttons container on the screen */}
+        <div className="flex flex-row justify-between w-screen m-4 px-4">
+          {/* class avatar */}
+          <div className="avatar online placeholder">
+            <div className="bg-neutral-focus text-neutral-content rounded-full w-12">
+              <span className="text-xl">{classParam}</span>
+            </div>
+          </div>
 
-      {/* button to add a homework */}
-      <a
-        className="group relative inline-block overflow-hidden border border-orange-600 px-6 py-2 focus:outline-none focus:ring"
-        onClick={handleAddHw}
-      >
-        <span className="absolute inset-y-0 left-0 w-[2px] bg-orange-600 transition-all group-hover:w-full group-active:bg-orange-500"></span>
-        <label
-          htmlFor="my-modal-4"
-          className="modal-button relative text-sm font-medium text-orange-600 transition-colors group-hover:text-white"
-        >
-          Track a new homework
-        </label>
-      </a>
-
-      <div>
-        <label htmlFor="my-modal-3" className="btn btn-error">
-          Delete Class
-        </label>
-        <input type="checkbox" id="my-modal-3" className="modal-toggle" />
-        <div className="modal">
-          <div className="modal-box relative">
-            <label
-              htmlFor="my-modal-3"
-              className="btn btn-sm btn-error btn-circle absolute right-2 top-2"
+          {/* button to add a homework */}
+          <div className="flex flex-row gap-5">
+            <a
+              className="btn bg-orange-500 border-orange-500 modal-button hover:bg-orange-600 hover:border-orange-600"
+              onClick={handleAddHw}
             >
-              ✕
-            </label>
-            <h3 className="text-lg font-bold">Confirm deletion?</h3>
-            <p className="py-4">
-              Do you really want to delete this Class Info? All data will be
-              lost!
-            </p>
-            <label
-              htmlFor="my-modal-3"
-              className="btn btn-error"
-              onClick={() => handleDelete()}
-            >
-              Confirm
-            </label>
+              <label
+                htmlFor="my-modal-4"
+                className="modal-button relative text-sm font-medium text-black "
+                onClick={handleAddHw}
+              >
+                New Homework
+              </label>
+            </a>
+
+            {/* button to delete class */}
+            <div>
+              <label htmlFor="my-modal-3" className="btn btn-error text-black">
+                Delete Class
+              </label>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="overflow-hidden overflow-x-auto rounded-lg border border-gray-20 w-4/5">
+      {/* table container of students with homework */}
+      <div className="overflow-hidden overflow-x-auto rounded-sm border border-gray-20 w-3/5 h-full">
         <table className="min-w-full divide-y divide-gray-200 text-sm">
           <thead className="bg-gray-100">
-            <tr>
+            <tr className="h-8">
               {yourClassHeader.map((header, index) => (
-                <th key={index} id={index}>
+                <th key={index} id={String(index)}>
                   <button onClick={(e) => handleHeader(e)} id={header.name}>
                     {header.name}
                   </button>
@@ -198,16 +230,18 @@ const ClassOverview = ({
           </thead>
           <tbody className="divide-y divide-gray-200">
             {classList.map((student, index) => (
-              <tr key={index}>
+              <tr key={index} className="h-8">
                 {yourClassHeader.map((header, index) => (
                   <td
                     key={index}
                     className={`text-center ${
                       student[header.name] === `not submitted` ||
                       student[header.name] === `late`
-                        ? `bg-red-50`
+                        ? `bg-red-100`
                         : ""
-                    } ${student[header.name] === `absent` ? `bg-blue-50` : ""}`}
+                    } ${
+                      student[header.name] === `absent` ? `bg-blue-100` : ""
+                    }`}
                   >
                     {student[header.name]}
                   </td>
