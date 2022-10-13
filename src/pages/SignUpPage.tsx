@@ -43,26 +43,26 @@ const SignUpPage = () => {
     },
   });
   return (
-    <div>
-      <h2>TeachSpace</h2>
+    <div className="flex flex-col items-center m-10">
+      <img src="/TeachSpaceLogo.png" alt="Teach Space" className="w-2/3" />
       <form
         onSubmit={formik.handleSubmit}
-        className="flex flex-col gap-4 items-center bg-slate-50 bg-opacity-70 p-5 rounded-md"
+        className="flex flex-col gap-4 items-center bg-opacity-70 p-5 rounded-md"
       >
-        <h1 className="text-2xl font-extrabold text-transparent sm:text-3xl bg-clip-text bg-gradient-to-r from-rose-300 via-blue-500 to-purple-600 drop-shadow-xl mb-5">
-          Sign up
-        </h1>
+        <h1 className="text-2xl text-blue-900 mb-5">Sign up</h1>
 
-        <div className="flex flex-row gap-2">
-          <div className="flex self-center text-blue-800">Username</div>
-          <input
-            name="username"
-            type="text"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.username}
-            className="input input-bordered"
-          />
+        <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-row gap-2">
+            <div className="flex self-center text-blue-800">Username</div>
+            <input
+              name="username"
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.username}
+              className="input input-bordered"
+            />
+          </div>
           {formik.touched.username && formik.errors.username ? (
             <div className="text-sm text-red-300 italic">
               {formik.errors.username}
@@ -70,16 +70,18 @@ const SignUpPage = () => {
           ) : null}
         </div>
 
-        <div className="flex flex-row gap-2">
-          <div className="flex self-center text-blue-800 m-1">Password</div>
-          <input
-            name="password"
-            type="password"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.password}
-            className="input input-bordered"
-          />
+        <div className="flex flex-col  items-center gap-2">
+          <div className="flex flex-row gap-2">
+            <div className="flex self-center text-blue-800 m-1">Password</div>
+            <input
+              name="password"
+              type="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
+              className="input input-bordered"
+            />
+          </div>
           {formik.touched.password && formik.errors.password ? (
             <div className="text-sm text-red-300 italic">
               {formik.errors.password}
@@ -87,16 +89,18 @@ const SignUpPage = () => {
           ) : null}
         </div>
 
-        <div className="flex flex-row gap-2">
-          <div className="flex self-center text-blue-800 m-3">Email</div>
-          <input
-            name="email"
-            type="text"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
-            className="input input-bordered"
-          />
+        <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-row gap-2">
+            <div className="flex self-center text-blue-800 m-3">Email</div>
+            <input
+              name="email"
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
+              className="input input-bordered"
+            />
+          </div>
           {formik.touched.email && formik.errors.email ? (
             <div className="text-sm text-red-300 italic">
               {formik.errors.email}
