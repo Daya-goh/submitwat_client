@@ -4,6 +4,7 @@ import NoteTodo from "../components/NoteTodo";
 import SubmitWatBanner from "../SubmitWatBanner";
 import {
   classHeaderInterface,
+  classTotal,
   CommonInterface,
   Details,
   Note,
@@ -23,7 +24,7 @@ const HomeworkOverview = ({
   const [list, setList] = useState<Details[]>([]);
   const [noteContent, setNoteContent] = useState<Note[]>([]);
   const [refresh, setRefresh] = useState<number>(0);
-  const [num, setNum] = useState<number>(0);
+  const [num, setNum] = useState<classTotal[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const HomeworkOverview = ({
           };
           array.push(detail);
         }
-        setNum(data.totalNum);
+        setNum(data.totalNum.rows);
         setYourClassHeader(data.homework.fields);
         setClassList(array);
         setSubmitted(data.submittedNum.rows[0].submittedtotal);
@@ -132,7 +133,9 @@ const HomeworkOverview = ({
           <div className="flex flex-row gap-10 items-center">
             <div
               className="radial-progress bg-blue-800 text-primary-content border-4 border-blue-800"
-              style={{ ["--value" as string]: (submitted / num) * 100 }}
+              style={{
+                ["--value" as string]: (submitted / num.submittedtotal) * 100,
+              }}
             >
               {submitted}
             </div>

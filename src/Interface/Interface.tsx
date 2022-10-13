@@ -8,6 +8,10 @@ export interface classHeaderInterface {
   name: string;
 }
 
+export interface classHeaderInterface {
+  name: number;
+}
+
 export interface ClassInterface {
   classList?: ClassDetail[];
   token?: string;
