@@ -29,8 +29,8 @@ const LandingPage = () => {
               projects and events of the year. (coming soon!)
             </p>
 
-            <a
-              href="/login"
+            <Link
+              to="/login"
               className="mt-8 inline-flex items-center rounded border border-blue-800 bg-blue-800 px-8 py-3 text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
             >
               <span className="text-sm font-medium"> Get Started </span>
@@ -49,7 +49,7 @@ const LandingPage = () => {
                   d="M17 8l4 4m0 0l-4 4m4-4H3"
                 />
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
