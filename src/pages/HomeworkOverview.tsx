@@ -36,6 +36,7 @@ const HomeworkOverview = ({
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         const array: Details[] = [];
         for (const each of data.homework.rows) {
           const detail: Details = {
