@@ -8,8 +8,8 @@ export interface classHeaderInterface {
   name: string;
 }
 
-export interface classHeaderInterface {
-  name: number;
+export interface classTotal {
+  submittedtotal: number;
 }
 
 export interface ClassInterface {

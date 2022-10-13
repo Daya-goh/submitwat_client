@@ -50,7 +50,7 @@ const HomeworkOverview = ({
         setNum(data.totalNum.rows);
         setYourClassHeader(data.homework.fields);
         setClassList(array);
-        setSubmitted(data.submittedNum.rows[0].submittedtotal);
+        setSubmitted(data.submittedNum.rows[0]);
         setList(data.notSubmittedList.rows);
       });
     console.log(num);
@@ -134,7 +134,7 @@ const HomeworkOverview = ({
             <div
               className="radial-progress bg-blue-800 text-primary-content border-4 border-blue-800"
               style={{
-                ["--value" as string]: (submitted / num.submittedtotal) * 100,
+                ["--value" as string]: (submitted / 40) * 100,
               }}
             >
               {submitted}
