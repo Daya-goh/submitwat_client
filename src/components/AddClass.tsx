@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CommonInterface, CSVObject } from "../Interface/Interface";
+import SubmitWatBanner from "../SubmitWatBanner";
 const SERVER = import.meta.env.VITE_SERVER;
 
 const AddClass = ({ token }: CommonInterface): JSX.Element => {
@@ -54,35 +55,38 @@ const AddClass = ({ token }: CommonInterface): JSX.Element => {
   const handleOnSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const newClass = {
-      keyword: classname,
-    };
-
-    if (file) {
-      fileReader.onload = function (event) {
-        const text = event.target?.result as string;
-        const array = csvFileToArray(text);
-        const url = `${SERVER}submitwat/addclasslist`;
-        fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ array, newClass }),
-        }).then((response) =>
-          response.json().then((data) => {
-            if (data.msg === "error") {
-              // console.log("error");
-              setStatusMsg("error: class name exist");
-            } else {
-              setStatusMsg("success: class added");
-            }
-          })
-        );
+    if (classname === "" || classname === " ") {
+      setStatusMsg("Class name cannot be empty");
+    } else {
+      const newClass = {
+        keyword: classname,
       };
-      // console.log(JSON.stringify({ array, newClass }));
-      fileReader.readAsText(file);
+
+      if (file) {
+        fileReader.onload = function (event) {
+          const text = event.target?.result as string;
+          const array = csvFileToArray(text);
+          const url = `${SERVER}submitwat/addclasslist`;
+          fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ array, newClass }),
+          }).then((response) =>
+            response.json().then((data) => {
+              if (data.msg === "error") {
+                setStatusMsg("error: class name exist");
+              } else {
+                setStatusMsg("success: class added");
+              }
+            })
+          );
+        };
+
+        fileReader.readAsText(file);
+      }
     }
   };
 
@@ -113,40 +117,74 @@ const AddClass = ({ token }: CommonInterface): JSX.Element => {
   };
 
   return (
-    <div>
-      <div>
-        <form encType="multipart/form-data">
-          <h2>Add Class</h2>
-          <div>
+    <div className="flex flex-col items-center">
+      <SubmitWatBanner />
+      <div className="flex flex-col items-center gap-5 m-5">
+        <form
+          encType="multipart/form-data"
+          className="flex flex-col items-center gap-5"
+        >
+          <div className="flex flex-col  items-center">
+            <h2 className="text-2xl font-thin">Add A Class</h2>
+            <a href="#my-modal-2" className="">
+              <div className="badge badge-secondary">!</div>
+              Click <span className="text-bold text-red-600">Me</span> before
+              uploading class list!
+            </a>
+            <div className="modal" id="my-modal-2">
+              <div className="modal-box">
+                <h3 className="font-bold text-lg">Please Take Note</h3>
+                <ul>
+                  <li>Class List file must be in csv format</li>
+                  <li>
+                    Rename register number header as{" "}
+                    <span className="text-red-600">id</span>
+                  </li>
+                  <li>
+                    Rename students name column as{" "}
+                    <span className="text-red-600">name</span>
+                  </li>
+                </ul>
+                <div className="modal-action">
+                  <a href="#" className="btn">
+                    OK!
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-row gap-3 items-center">
             <label>Class</label>
             <input
               type="text"
               name="className"
-              className="border-2"
+              className="border-2 input input-bordered"
               onChange={(e) => handleClassChange(e)}
             ></input>
           </div>
           <h4>{statusMsg}</h4>
 
-          <input
-            type={"file"}
-            id={"csvFileInput"}
-            accept={".csv"}
-            onChange={handleOnChange}
-          />
+          <div className="flex flex-row ">
+            <input
+              type={"file"}
+              id={"csvFileInput"}
+              accept={".csv"}
+              onChange={handleOnChange}
+            />
 
-          <button
-            onClick={(e) => {
-              handleOnSubmit(e);
-            }}
-            className="btn btn-primary"
-          >
-            IMPORT CSV
-          </button>
+            <button
+              onClick={(e) => {
+                handleOnSubmit(e);
+              }}
+              className="btn bg-blue-600 border-blue-600"
+            >
+              IMPORT CSV
+            </button>
+          </div>
         </form>
 
         {/* show content of uploaded file */}
-        <table>
+        <table className="table">
           <thead>
             <tr key={"header"}>
               {headerKeys.map((key) => (
@@ -165,7 +203,13 @@ const AddClass = ({ token }: CommonInterface): JSX.Element => {
             ))}
           </tbody>
         </table>
-        <button onClick={() => handleClassSubmit()}>Submit</button>
+
+        <button
+          onClick={() => handleClassSubmit()}
+          className="btn bg-blue-600 border-blue-600"
+        >
+          Submit
+        </button>
       </div>
     </div>
   );

@@ -58,7 +58,7 @@ const ClassOverview = ({
         .required("Required"),
     }),
     onSubmit: async (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
       const url = `${SERVER}submitwat/${classParam}/addhw`;
       fetch(url, {
         method: "POST",
@@ -97,7 +97,7 @@ const ClassOverview = ({
     }).then((response) => response.json().then((data) => console.log(data)));
     navigate(`/main/submitwat`);
   };
-  console.log(classList);
+  /* -------------------------------------------------------------------------------------------- */
   return (
     <div className="flex flex-col gap-2 items-center">
       <SubmitWatBanner />
@@ -124,6 +124,9 @@ const ClassOverview = ({
                     value={formik.values.assignmentName}
                     className="input input-bordered w-full max-w-xs"
                   />
+                  <p className="text-xs">
+                    Please do not have spaces in assignment name
+                  </p>
                   {formik.touched.assignmentName &&
                   formik.errors.assignmentName ? (
                     <div className="text-sm text-red-500 italic">
@@ -237,13 +240,17 @@ const ClassOverview = ({
           </thead>
           <tbody className="divide-y divide-gray-200">
             {classList.map((student, index) => (
-              <tr key={index} className="h-8">
+              <tr key={index} className="h-10">
                 {yourClassHeader.map((header, index) => (
                   <td
                     key={index}
                     id={String(student.student_id)}
                     className={`text-center ${
-                      student[header.name] === `late` ? `bg-red-100` : ""
+                      student[header.name] === `late`
+                        ? `bg-red-100`
+                        : "" || student[header.name] === `not submitted`
+                        ? `bg-red-100`
+                        : ""
                     } ${
                       student[header.name] === `absent` ? `bg-blue-100` : ""
                     }`}

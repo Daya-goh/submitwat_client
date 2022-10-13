@@ -16,10 +16,10 @@ const NoteTodo = ({
 
   /* -------------------------- notes todo -------------------------- */
   const handleNoteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     setNote(e.target.value);
   };
 
+  /* -------------------------- add note -------------------------- */
   const handleNoteAdd = () => {
     console.log("add");
     if (note === "null" || note === "") {
@@ -37,21 +37,16 @@ const NoteTodo = ({
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(newNote),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-        });
-      setStatus("");
-      setRefresh(refresh + 1);
+      }).then((response) => response.json());
     }
+    setNote(" ");
+    setStatus("");
+    setRefresh(refresh + 1);
   };
 
   /* ----------------------- toggle checkbox ---------------------- */
   const handleNoteCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(noteContent);
     const array = noteContent.map((eachNote) => {
-      console.log(Number(e.target.id), eachNote.id);
       if (Number(e.target.id) === eachNote.id) {
         console.log("bye");
         console.log(e.target.checked);
@@ -62,7 +57,6 @@ const NoteTodo = ({
         return eachNote;
       }
     });
-    console.log("hi");
     setNoteContent(array);
 
     const noteStatusObj = {
@@ -78,13 +72,13 @@ const NoteTodo = ({
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(noteStatusObj),
-    }).then((response) => response.json().then((data) => console.log(data)));
-    // setRefresh(true);
+    }).then((response) => response.json());
   };
 
+  /* ------------------------- delete note ------------------------ */
   const handleNoteDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     const notesDelete = {
-      id: e.currentTarget.id + 1,
+      id: Number(e.currentTarget.id) + 1,
     };
 
     const notesStatusURL = `${SERVER}submitwat/${classParam}/${columnName}/note`;
@@ -98,55 +92,67 @@ const NoteTodo = ({
     }).then((response) => response.json().then((data) => console.log(data)));
     setRefresh(refresh + 1);
   };
-
+  /* ---------------------------------------------------------------------------------------------------- */
   return (
     <div>
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
-          <div className="flex flex-row gap-2">
-            <div>
+          <div className="flex flex-row gap-2 items-center">
+            <div className="w-full">
               <input
                 type="text"
                 placeholder="Type here"
                 className="input input-bordered input-sm w-full max-w-xs"
                 onChange={(e) => handleNoteChange(e)}
+                value={note}
               />
               <p className="text-xs text-red-500">{status}</p>
             </div>
-            <div
-              className="bg-blue-500 w-12 h-8 rounded-md flex justify-center items-center"
-              onClick={() => handleNoteAdd()}
-            >
-              <span>&#8594;</span>
-            </div>
+
+            <label className="label cursor-pointer">
+              <div
+                className="bg-blue-500 w-12 h-8 rounded-md flex justify-center items-center"
+                onClick={() => handleNoteAdd()}
+              >
+                <span>&#8594;</span>
+              </div>
+            </label>
           </div>
+
           <h2 className="card-title">Notes</h2>
-        </div>
-        <div>
-          {noteContent.map((each, index) => (
-            <div className="form-control" key={index}>
-              <label className="label cursor-pointer">
-                <span className="label-text">{each.note}</span>
-                <input
-                  type="checkbox"
-                  checked={each.checkedStatus}
-                  className="checkbox"
-                  key={index}
-                  id={String(each.id)}
-                  onChange={(e) => handleNoteCheck(e)}
-                />
-              </label>
-              <label className="label cursor-pointer">
-                <button
-                  className="w-6 h-6 border-2 rounded-md"
-                  id={String(each.id)}
-                  onClick={(e) => handleNoteDelete(e)}
-                >
-                  ✖
-                </button>
-              </label>
-            </div>
-          ))}
+
+          <div>
+            {noteContent.map((each, index) => (
+              <div
+                className="form-control flex flex-row items-center justify-between my-3 border-b border-slate-100
+                "
+                key={index}
+              >
+                <span className="label-text text-lg">{each.note}</span>
+                <div className="flex flex-row">
+                  <label className="label cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={each.checkedStatus}
+                      className="checkbox"
+                      key={index}
+                      id={String(each.id)}
+                      onChange={(e) => handleNoteCheck(e)}
+                    />
+                  </label>
+                  <label className="label cursor-pointer">
+                    <button
+                      className="w-6 h-6 border-2 rounded-md"
+                      id={String(each.id)}
+                      onClick={(e) => handleNoteDelete(e)}
+                    >
+                      ✖
+                    </button>
+                  </label>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

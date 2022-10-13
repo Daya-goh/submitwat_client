@@ -90,27 +90,33 @@ const AddHw = ({
   };
 
   return (
-    <div>
-      <div>
-        <button onClick={handleSave} className="btn btn-primary btn-square">
+    <div className="flex flex-col items-center gap-3">
+      <div className="flex flex-row justify-end gap-3 w-80">
+        <button
+          onClick={handleSave}
+          className="btn bg-blue-800 border-blue-800 hover:bg-blue-700 hover:border-blue-700 btn-square"
+        >
           Save
         </button>
-        <button onClick={handleAll} className="btn btn-primary ">
+        <button
+          onClick={handleAll}
+          className="btn  bg-blue-800 border-blue-800 hover:bg-blue-700 hover:border-blue-700 "
+        >
           submit ? to all
         </button>
       </div>
 
-      <table className="table w-96">
+      <table className="table w-80">
         <thead>
           <tr>
             <th>Name</th>
-            <th>{columnName}</th>
+            <th className="text-center">{columnName}</th>
           </tr>
         </thead>
         <tbody>
           {statusArray.map((each, index) => (
             <tr key={index}>
-              <th className="text-center">
+              <th className="text-left tracking-wide">
                 {each.student_id} {each.student_name}
               </th>
 
@@ -122,6 +128,7 @@ const AddHw = ({
                     name="status"
                     onChange={(e) => handleChange(e)}
                     id={String(index + 1)}
+                    className="text-center h-10"
                   >
                     <option id={String(index + 1)} value="null">
                       nil

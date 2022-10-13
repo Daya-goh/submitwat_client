@@ -25,8 +25,6 @@ const HomeworkOverview = ({
   const [refresh, setRefresh] = useState<number>(0);
   const navigate = useNavigate();
 
-  console.log(yourClassHeader);
-
   useEffect(() => {
     const urlClassList = `${SERVER}submitwat/${classParam}/${columnName}`;
     fetch(urlClassList, {
@@ -37,7 +35,6 @@ const HomeworkOverview = ({
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         const array: Details[] = [];
         for (const each of data.homework.rows) {
           const detail: Details = {
@@ -64,7 +61,6 @@ const HomeworkOverview = ({
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.rows);
         for (const each of data.rows) {
           const noteObj = {
             id: each.note_id - 1,
@@ -118,10 +114,11 @@ const HomeworkOverview = ({
     }).then((response) => response.json().then((data) => console.log(data)));
     navigate(`/main/submitwat/${classParam}`);
   };
-
+  /* ---------------------------------------------------------------------------------------------------------------- */
   return (
     <div className="flex flex-col items-center gap-5">
       <SubmitWatBanner />
+      {/* assignment name */}
       <div className="flex flex-row justify-center w-screen px-8">
         <h1 className="text-3xl">
           {columnName} ({classParam})
@@ -197,6 +194,7 @@ const HomeworkOverview = ({
                           name="status"
                           onChange={(e) => handleChange(e)}
                           id={String(index + 1)}
+                          className="text-center h-10"
                         >
                           <option id={String(index + 1)} value="null">
                             nil
@@ -225,14 +223,15 @@ const HomeworkOverview = ({
 
         <div className="flex flex-col gap-5 my-20">
           <div className="card w-72 bg-base-100 shadow-xl">
-            <div className="card-body flex flex-col items-center">
+            <div className="card-body flex flex-col items-left">
               <h2 className="card-title">Not Submitted</h2>
-              {list.map((name, index) => (
-                <p key={index}>{name.student_name}</p>
-              ))}
-              <div className="card-actions justify-end">
-                {/* <button className="btn btn-primary">Buy Now</button> */}
-              </div>
+              <ul>
+                {list.map((name, index) => (
+                  <li key={index} className="list-none">
+                    {name.student_name}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
