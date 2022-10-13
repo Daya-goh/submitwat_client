@@ -4,7 +4,7 @@ import NoteTodo from "../components/NoteTodo";
 import SubmitWatBanner from "../SubmitWatBanner";
 import {
   classHeaderInterface,
-  classTotal,
+  // classTotal,
   CommonInterface,
   Details,
   Note,
@@ -24,7 +24,7 @@ const HomeworkOverview = ({
   const [list, setList] = useState<Details[]>([]);
   const [noteContent, setNoteContent] = useState<Note[]>([]);
   const [refresh, setRefresh] = useState<number>(0);
-  const [num, setNum] = useState<classTotal[]>([]);
+  // const [num, setNum] = useState<classTotal[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,13 +47,13 @@ const HomeworkOverview = ({
           };
           array.push(detail);
         }
-        setNum(data.totalNum.rows);
+        // setNum(data.totalNum.rows);
         setYourClassHeader(data.homework.fields);
         setClassList(array);
         setSubmitted(data.submittedNum.rows[0]);
         setList(data.notSubmittedList.rows);
       });
-    console.log(num);
+    // console.log(num);
     const notesArray: Note[] = [];
     const urlNotes = `${SERVER}submitwat/${classParam}/${columnName}/note`;
     fetch(urlNotes, {
