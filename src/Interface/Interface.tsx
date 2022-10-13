@@ -61,3 +61,7 @@ export interface NoteInterface {
 export interface YourClassHeader {
   [key: string]: string | number | undefined;
 }
+
+export interface NavBarInterface {
+  setToken: Dispatch<SetStateAction<string>>;
+}

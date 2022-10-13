@@ -24,7 +24,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage setToken={setToken} />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/main" element={<Layout />}>
+          <Route path="/main" element={<Layout setToken={setToken} />}>
             <Route index element={<MainPage token={token} />} />
             <Route
               path="/main/submitwat"

@@ -29,7 +29,7 @@ const SignUpPage = () => {
       email: Yup.string().email().required("*Required"),
     }),
     onSubmit: async (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
       const url = `${SERVER}signup`;
       const res = await fetch(url, {
         method: "POST",
