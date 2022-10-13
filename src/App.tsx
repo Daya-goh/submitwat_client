@@ -6,6 +6,7 @@ import Layout from "./components/Layout";
 import AddHw from "./pages/AddHw";
 import ClassOverview from "./pages/ClassHomeworkOverview";
 import HomeworkOverview from "./pages/HomeworkOverview";
+import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import SignUpPage from "./pages/SignUpPage";
@@ -20,6 +21,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage setToken={setToken} />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/main" element={<Layout />}>
