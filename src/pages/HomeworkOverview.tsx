@@ -170,7 +170,7 @@ const HomeworkOverview = ({
               </div>
             </div>
           </div>
-          <div className="overflow-hidden overflow-x-auto rounded-sm border border-gray-20 w-full">
+          <div className="overflow-hidden overflow-x-auto rounded-sm border border-gray-20 w-5/6">
             <table className="w-full divide-y divide-gray-200 text-sm">
               <thead className="bg-gray-100">
                 <tr className="h-8">
