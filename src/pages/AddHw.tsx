@@ -70,8 +70,6 @@ const AddHw = ({
     setStatusArray(array);
   };
 
-  console.log(statusArray);
-
   /* ------------------ saving updated data into db ----------------- */
 
   const handleSave = (): void => {
