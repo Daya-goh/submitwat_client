@@ -20,6 +20,10 @@ Click on the link to learn more about this application!
 https://prezi.com/view/exd3mdU5BKCcMtfG4nhw/
 <img width="1159" alt="Screenshot 2022-11-24 at 2 35 00 AM" src="https://user-images.githubusercontent.com/108121984/203622907-b3831101-b518-48ba-84d4-3e18fad35207.png">
 
+## Login details
+username: teacher1
+password: Teacher1!
+
 ## Core functions of app
 This homework tracker's main function is to allow teacher to update the homework submission status within 1 minute and it will give teacher an overview of the status clearly at the same time. 
 Hence, there is a function in the application where after teacher updates the status of students who did not submit their hoemwork, can update the rest of the class' status easily with one click. 
